@@ -18,7 +18,7 @@ function Navbar() {
     <div className="navbar">
       <div className="left">
         <Link to={"/"} style={{ textDecoration: "none" }}>
-          <span>AlxsSocial</span>
+          <span>BirdFace</span>
         </Link>
         <HomeOutlinedIcon />
         {darkMode ? (

@@ -5,7 +5,7 @@ function Register() {
     <div className="register">
       <div className="card">
         <div className="left">
-          <h1>ALXS SOCIAL</h1>
+          <h1>BIRD FACE</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio,
             architecto aut voluptate quaerat quidem obcaecati
