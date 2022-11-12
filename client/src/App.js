@@ -4,6 +4,7 @@ import Loader from "./components/Loader/Loader";
 import Navbar from "./components/Navbar/Navbar";
 import Leftbar from "./components/LeftBar/Leftbar";
 import Rightbar from "./components/RightBar/Rightbar";
+import './style.scss'
 
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
@@ -15,7 +16,7 @@ function App() {
 
   const Layout = () => {
     return (
-      <div>
+      <div className="theme-dark">
         <Navbar />
         <div style={{ display: "flex" }}>
           <Leftbar />
