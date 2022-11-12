@@ -6,6 +6,7 @@ import Leftbar from "./components/LeftBar/Leftbar";
 import Rightbar from "./components/RightBar/Rightbar";
 import './style.scss'
 import { DarkModeContext } from "./context/darkModeContext";
+import { AuthContext } from "./context/authContext";
 
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
@@ -13,7 +14,7 @@ const Register = lazy(() => import("./pages/register/Register"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 function App() {
 
-  const currentUser = true
+  const {currentUser} = useContext(AuthContext)
 
   const {darkMode} = useContext(DarkModeContext)
 

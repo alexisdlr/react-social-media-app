@@ -1,6 +1,9 @@
 import "./Leftbar.scss";
 import Images from "../../assets/Images";
+import { AuthContext } from "../../context/authContext";
+import { useContext } from "react";
 function Leftbar() {
+  const {currentUser} = useContext(AuthContext)
   return (
     <div className="leftbar">
       <div className="container">
@@ -8,11 +11,11 @@ function Leftbar() {
           <div className="user">
             <img
               src={
-                "https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                currentUser.pic
               }
               alt="user"
             />
-            <span>John Doe</span>
+            <span>{currentUser.name}</span>
           </div>
           <div className="item">
             <img src={Images.Friends} alt="Friends" />
