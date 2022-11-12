@@ -1,10 +1,11 @@
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useContext } from "react";
 import Loader from "./components/Loader/Loader";
 import Navbar from "./components/Navbar/Navbar";
 import Leftbar from "./components/LeftBar/Leftbar";
 import Rightbar from "./components/RightBar/Rightbar";
 import './style.scss'
+import { DarkModeContext } from "./context/darkModeContext";
 
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
@@ -14,9 +15,13 @@ function App() {
 
   const currentUser = true
 
+  const {darkMode} = useContext(DarkModeContext)
+
+  console.log(darkMode)
+
   const Layout = () => {
     return (
-      <div className="theme-dark">
+      <div className={`theme-${darkMode ? 'dark': 'light'}`}>
         <Navbar />
         <div style={{ display: "flex" }}>
           <Leftbar />
