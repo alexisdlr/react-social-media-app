@@ -2,6 +2,8 @@ import "./Leftbar.scss";
 import Images from "../../assets/Images";
 import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
+import defaultPic from '../../assets/userPicDefault.png'
+
 function Leftbar() {
   const {currentUser} = useContext(AuthContext)
   return (
@@ -11,7 +13,7 @@ function Leftbar() {
           <div className="user">
             <img
               src={
-                currentUser.pic
+                currentUser.profilePic === null ? defaultPic : currentUser.profilePic
               }
               alt="user"
             />

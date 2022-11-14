@@ -1,54 +1,63 @@
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import { lazy, Suspense, useContext } from "react";
 import Loader from "./components/Loader/Loader";
 import Navbar from "./components/Navbar/Navbar";
 import Leftbar from "./components/LeftBar/Leftbar";
 import Rightbar from "./components/RightBar/Rightbar";
-import './style.scss'
+import "./style.scss";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Register = lazy(() => import("./pages/register/Register"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 function App() {
+  const { currentUser } = useContext(AuthContext);
 
-  const {currentUser} = useContext(AuthContext)
+  const { darkMode } = useContext(DarkModeContext);
 
-  const {darkMode} = useContext(DarkModeContext)
+  console.log(darkMode);
 
-  console.log(darkMode)
+  const queryClient = new QueryClient()
 
   const Layout = () => {
     return (
-      <div className={`theme-${darkMode ? 'dark': 'light'}`} >
-        <Navbar />
-        <div style={{ display: "flex" }}>
-          <Leftbar />
-          <div style={{flex: 6}}>
-            <Outlet />
+      <QueryClientProvider client={queryClient}>
+        <div className={`theme-${darkMode ? "dark" : "light"}`}>
+          <Navbar />
+          <div style={{ display: "flex" }}>
+            <Leftbar />
+            <div style={{ flex: 6 }}>
+              <Outlet />
+            </div>
+            <Rightbar />
           </div>
-          <Rightbar />
         </div>
-      </div>
+      </QueryClientProvider>
     );
   };
 
-  const ProtectedRoutes = ({children}) => {
-    if(!currentUser) {
-      return <Navigate to='/login' />
+  const ProtectedRoutes = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
     }
-    return children
-  }
+    return children;
+  };
   const router = createBrowserRouter([
     {
       path: "/",
-      element: 
-      <ProtectedRoutes>
-        <Layout />
-      </ProtectedRoutes>
-      ,
+      element: (
+        <ProtectedRoutes>
+          <Layout />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           path: "/",

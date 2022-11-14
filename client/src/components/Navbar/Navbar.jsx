@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
+import defaultPic from '../../assets/userPicDefault.png'
+
 function Navbar() {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const {currentUser} = useContext(AuthContext)
@@ -43,7 +45,7 @@ function Navbar() {
         <div className="user">
           <img
             src={
-              currentUser.pic
+              currentUser.profilePic === null ? defaultPic : currentUser.profilePic
             }
             alt="user"
           />

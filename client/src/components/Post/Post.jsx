@@ -7,17 +7,20 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Comments from "../comments/Comments";
+import defaultPic from '../../assets/userPicDefault.png'
 function Post({ post }) {
   const [commentsOpen, setCommentsOpen] = useState(false)
   //temporary
   const liked = false;
   //
+  console.log(typeof(post.profilePic))
+
   return (
     <div className="post">
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={post.profilePic} alt="user" />
+            <img src={post.profilePic === null ? defaultPic : post.profilePic} alt="user" />
             <div className="details">
               <Link
                 to={`/profile/${post.userId}`}
