@@ -1,6 +1,6 @@
 # react-social-media-app
 
-#if you want to run this project on your localhost machine you need to: 
+# if you want to run this project on your localhost machine you need to: 
 
 <ul> 
   <li>Clone this repository on your computer. </li>
