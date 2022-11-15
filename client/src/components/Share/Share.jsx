@@ -35,7 +35,6 @@ const Share = () => {
   const handleChange = (e) => {
     
     setInput(e.target.value);
-    console.log(input)
   };
  
 
@@ -43,14 +42,17 @@ const Share = () => {
     e.preventDefault()
     let imgUrl = '';
     if(file) imgUrl = await upload()
-    console.log(imgUrl);
      mutation.mutate({desc: input, img: imgUrl})
+     setInput('')
+     setFile(null)
+
   }
 
   return (
     <div className="share">
       <div className="container">
         <div className="top">
+          <div className="left">
           <img
             src={
               currentUser.profilePic === null
@@ -64,7 +66,12 @@ const Share = () => {
             name="desc"
             placeholder={`What's on your mind ${currentUser.name}?`}
             onChange={handleChange}
+            value={input}
           />
+          </div>
+          <div className="right">
+            {file && <img src={URL.createObjectURL(file)} alt='' />}
+          </div>
         </div>
         <hr />
         <div className="bottom">
