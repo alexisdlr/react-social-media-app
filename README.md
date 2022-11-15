@@ -4,7 +4,7 @@
 
 <ul> 
   <li>Clone this repository on your computer. </li>
-  <li>Open the proyect on your terminal. </li>
+  <li>Open the project on your terminal. </li>
   <li>Navigate to the client folder and run 'npm install' to install all the dependencies.</li>
   <li>Navigate to the api folder and run npm install</li>
   <li>You need to create a mysql database and import the db.sql file from the api folder</li>
