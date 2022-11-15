@@ -26,7 +26,7 @@ function Comments() {
   return (
     <div className='comments'>
        <div className="write">
-        <img src={currentUser.pic} alt="" />
+        <img src={currentUser.profilePicture} alt="" />
         <input type="text" placeholder="write a comment" />
         <button>Send</button>
       </div>

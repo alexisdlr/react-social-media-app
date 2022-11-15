@@ -9,11 +9,10 @@ import { useState } from "react";
 import Comments from "../comments/Comments";
 import defaultPic from '../../assets/userPicDefault.png'
 function Post({ post }) {
-  const [commentsOpen, setCommentsOpen] = useState(false)
+  const [commentsOpen, setCommentsOpen] = useState(false);
   //temporary
   const liked = false;
   //
-  console.log(typeof(post.profilePic))
 
   return (
     <div className="post">
@@ -35,7 +34,7 @@ function Post({ post }) {
         </div>
         <div className="content">
           <p>{post.desc}</p>
-          <img src={post.img} alt="" />
+          <img src={'./uploads/' + post.img} alt="" />
         </div>
         <div className="info">
           <div className="item">

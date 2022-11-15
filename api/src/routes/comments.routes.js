@@ -3,6 +3,6 @@ import { getComments } from "../controllers/comments.controller.js"
 
 const router = Router()
 
-router.get('', getComments)
+router.get('/', getComments)
 
 export default router
