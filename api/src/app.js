@@ -46,5 +46,4 @@ app.use('/api/posts', postsRoutes)
 app.use('/api/comments', commentsRoutes)
 app.use('/api/likes', likesRoutes)
 
-
 export default app

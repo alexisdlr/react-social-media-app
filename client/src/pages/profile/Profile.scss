@@ -89,7 +89,7 @@
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
 
             .item {
               display: flex;
@@ -98,7 +98,7 @@
               color: themed("textColorSoft");
 
               span {
-                font-size: 12px;
+                font-size: 10px;
               }
             }
           }

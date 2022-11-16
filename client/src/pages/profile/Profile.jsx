@@ -7,30 +7,41 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PlaceIcon from "@mui/icons-material/Place";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import Posts from "../../components/Posts/Posts"
+import Posts from "../../components/Posts/Posts";
 import { makeRequest } from "../../axios";
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
+import defaultPic from "../../assets/userPicDefault.png";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
-
+  const { currentUser } = useContext(AuthContext);
+  const userId = useLocation().pathname.split("/")[2];
   const { isLoading, error, data } = useQuery({
-    queryKey: ["comments"],
+    queryKey: ["user"],
     queryFn: () =>
-      makeRequest.get("/comments?postId=").then((res) => {
-        return res.data
-      })
-  })
+      makeRequest.get("/users/find/" + userId).then((res) => {
+        return res.data;
+      }),
+  });
+  console.log(data);
 
   return (
+    isLoading ? 'loading' : 
     <div className="profile">
       <div className="images">
         <img
-          src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          src={
+            data.coverPic === null
+              ? "https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              : data.coverPic
+          }
           alt=""
           className="cover"
         />
         <img
-          src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+          src={data.profilePic === null ? defaultPic : data.profilePic}
           alt=""
           className="profilePic"
         />
@@ -39,39 +50,42 @@ const Profile = () => {
         <div className="uInfo">
           <div className="left">
             <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
+              <FacebookTwoToneIcon fontSize="medium" />
             </a>
             <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
+              <InstagramIcon fontSize="medium" />
             </a>
             <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
+              <TwitterIcon fontSize="medium" />
             </a>
             <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
+              <LinkedInIcon fontSize="medium" />
             </a>
             <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
+              <PinterestIcon fontSize="medium" />
             </a>
           </div>
           <div className="center">
-            <span>Jane Doe</span>
+            <span> {data.name}</span>
             <div className="info">
               <div className="item">
                 <PlaceIcon />
-                <span>USA</span>
+                <span>{data.city}</span>
               </div>
               <div className="item">
-                <span>lama.dev</span>
+                <span>{data.website}</span>
               </div>
             </div>
-            <button>follow</button>
+            { 
+              currentUser.id === data.id ?  <button>Update</button> : 
+              <button>follow</button>
+              }
           </div>
           <div className="right">
             <EmailOutlinedIcon />
           </div>
         </div>
-      <Posts/>
+        <Posts />
       </div>
     </div>
   );
