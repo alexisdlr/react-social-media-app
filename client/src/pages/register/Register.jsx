@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.scss";
 import axios from 'axios'
 function Register() {
+  const navigate = useNavigate()
   const [err, setErr] = useState(null)
   const [inputs, setInputs] = useState({
     username: '',
@@ -19,6 +20,7 @@ function Register() {
 
     try {
       await axios.post('http://localhost:8800/api/auth/register', inputs)
+      navigate('/login')
     } catch (error) {
       setErr(error.response.data)
      console.log(error); 
@@ -41,10 +43,10 @@ function Register() {
         <div className="right">
           <h2>Register</h2>
           <form>
-            <input type="text" name="username" placeholder="Username" onChange={handleChange} />
-            <input type="email" name="email" placeholder="Email" onChange={handleChange} />
-            <input type="password" name="password" placeholder="Password" onChange={handleChange} />
-            <input type="text" name="name" placeholder="Name" onChange={handleChange} />
+            <input type="text" required name="username" placeholder="Username" onChange={handleChange} />
+            <input type="email" required name="email" placeholder="Email" onChange={handleChange} />
+            <input type="password" required name="password" placeholder="Password" onChange={handleChange} />
+            <input type="text" required name="name" placeholder="Name" onChange={handleChange} />
             <button onClick={handleClick}>Register</button>
             {err && <p style={{color: 'red'}}>{err}</p>}
           </form>

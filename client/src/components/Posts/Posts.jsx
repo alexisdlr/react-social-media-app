@@ -10,8 +10,7 @@ function Posts() {
       makeRequest.get("/posts").then((res) => {
         return res.data;
       }),
-  });
-  console.log(data);
+  })
   return (
     <div className="posts">
       {error

@@ -6,12 +6,21 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PlaceIcon from "@mui/icons-material/Place";
-import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/Posts/Posts"
+import { makeRequest } from "../../axios";
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 
 const Profile = () => {
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["comments"],
+    queryFn: () =>
+      makeRequest.get("/comments?postId=").then((res) => {
+        return res.data
+      })
+  })
+
   return (
     <div className="profile">
       <div className="images">
