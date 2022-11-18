@@ -9,7 +9,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Posts from "../../components/Posts/Posts";
 import { makeRequest } from "../../axios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import defaultPic from "../../assets/userPicDefault.png";
 import { useContext } from "react";
@@ -17,6 +17,7 @@ import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
+
   const userId = useLocation().pathname.split("/")[2];
   const { isLoading, error, data } = useQuery({
     queryKey: ["user"],
@@ -25,10 +26,39 @@ const Profile = () => {
         return res.data;
       }),
   });
-  console.log(data);
 
-  return (
-    isLoading ? 'loading' : 
+  const { risLoading, data: relationshipData } = useQuery({
+    queryKey: ["relationship"],
+    queryFn: () =>
+      makeRequest.get("/relationships?followedUser=" + userId).then((res) => {
+        return res.data;
+      }),
+  });
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (following) => {
+      if (following)
+        return makeRequest.delete("/relationships?userId=" + userId);
+      return makeRequest.post("/relationships", { userId });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["relationship"]);
+      },
+    }
+  );
+
+  const handleFollow = () => {
+    mutation.mutate(relationshipData.includes(currentUser.id));
+  };
+
+  console.log(relationshipData);
+
+  return isLoading ? (
+    "loading"
+  ) : (
     <div className="profile">
       <div className="images">
         <img
@@ -76,16 +106,25 @@ const Profile = () => {
                 <span>{data.website}</span>
               </div>
             </div>
-            { 
-              currentUser.id === data.id ?  <button>Update</button> : 
-              <button>follow</button>
-              }
+            {risLoading ? (
+              "loading"
+            ) : currentUser.id === data.id ? (
+              <button>Update</button>
+            ) : (
+              <button onClick={handleFollow}>
+                {risLoading
+                  ? "loading"
+                  : relationshipData.includes(currentUser.id)
+                  ? "following"
+                  : "follow"}
+              </button>
+            )}
           </div>
           <div className="right">
             <EmailOutlinedIcon />
           </div>
         </div>
-        <Posts />
+        <Posts userId={userId} />
       </div>
     </div>
   );

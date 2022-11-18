@@ -4,6 +4,7 @@ import userRoutes from './routes/users.routes.js'
 import postsRoutes from './routes/posts.routes.js'
 import likesRoutes from './routes/likes.routes.js'
 import commentsRoutes from './routes/comments.routes.js'
+import relationshipsRoutes from './routes/relationships.routes.js'
 import authRoutes from './routes/auth.routes.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -45,5 +46,6 @@ app.use('/api/users', userRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/api/comments', commentsRoutes)
 app.use('/api/likes', likesRoutes)
+app.use('/api/relationships', relationshipsRoutes)
 
 export default app
